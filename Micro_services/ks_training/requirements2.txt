@@ -1,0 +1,5 @@
+sentence_transformers
+langchain
+numpy
+pillow
+pdf2image

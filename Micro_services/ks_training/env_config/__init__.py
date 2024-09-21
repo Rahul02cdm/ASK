@@ -1,0 +1,1 @@
+from env_config.settings import settings

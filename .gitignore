@@ -1,0 +1,9 @@
+files_local
+
+demo.py
+producer_MQ.py
+
+Micro_services/ks_training/data_preparation_service_copy.py
+
+Micro_services/ks_training/engine/__pycache__
+Micro_services/ks_training/env_config/__pycache__
