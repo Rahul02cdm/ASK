@@ -145,59 +145,60 @@ def extract_documets_data(channel, api_data, settings, connection, es_client, em
                 directory_name_without_spaces = directory_name.replace(" ", "")
                 index_name = project_code.lower()+"_"+directory_name_without_spaces.lower()+"_index"
                 print("index_name", index_name)
-                # dims = 1024
-                # index_response = index_creation.creating_es_index(index_name, settings, es_client, dims)
-                # print("index_response", index_response)
+                dims = 1024
+                index_response = index_creation.creating_es_index(index_name, settings, es_client, dims)
+                print("index_response", index_response)
                 # logging.info('index_response %s', index_response)
                 
-                # es_index = {
-                #     "es_group_index": index_name,
-                #     "group_name": directory_name,
-                #     "output_file_path": output_dir_path,
-                #     "chunk_output_file_name": chunk_output_file_name,
-                #     "group_id": group_id,
-                #     "doc_ids": doc_ids
-                # }
+                es_index = {
+                    "es_group_index": index_name,
+                    "group_name": directory_name,
+                    "output_file_path": output_dir_path,
+                    "chunk_output_file_name": chunk_output_file_name,
+                    "group_id": group_id,
+                    "doc_ids": doc_ids
+                }
                 
-                # group_index_list.append(es_index)
-                # print("group_index_list", group_index_list)
+                group_index_list.append(es_index)
+                print("group_index_list", group_index_list)
+                print("successfulllll")
                 
-                # if not index_response == "index creation failed":
-                #     print("models_directory", models_directory)
-                #     embedding_response = vector_embeddings_creation.create_vector_embeddings(chunk_output_file_name, index_name, models_directory, settings, es_client, embeddings, index_response)
-                #     print("embedding_response", embedding_response)
-                #     if embedding_response == "succeeded":
-                #         print("send success response")
-                #         logging.info('send success response')
-                #         responseDict = utility.form_success_response(responseDict, "", "", "", api_data)
-                #         print("responseDict", responseDict)
-                #         logging.info('responseDict %s', responseDict)
-                #         responseDict["group_index_names"] = group_index_list
+                if not index_response == "index creation failed":
+                    print("models_directory", models_directory)
+                    embedding_response = vector_embeddings_creation.create_vector_embeddings(chunk_output_file_name, index_name, models_directory, settings, es_client, embeddings, index_response)
+                    print("embedding_response", embedding_response)
+                    if embedding_response == "succeeded":
+                        print("send success response")
+                        logging.info('send success response')
+                        responseDict = utility.form_success_response(responseDict, "", "", "", api_data)
+                        print("responseDict", responseDict)
+                        logging.info('responseDict %s', responseDict)
+                        responseDict["group_index_names"] = group_index_list
                         
-                #         # send message only on last folder
-                #         if len(directory_names)==number_of_folders:
-                #             utility.publish_results(channel, responseDict, project_code, settings, connection)
-                #     else:
-                #         print("send failure response")
-                #         logging.info('send failure response')
-                #         responseDict = utility.form_error_response(responseDict, "documents upload to elasticsearch failed", api_data, filename_pdf)
-                #         responseDict["group_index_names"]=[]
-                #         print("responseDict", responseDict)
-                #         logging.info('responseDict %s', responseDict)
+                        # send message only on last folder
+                        if len(directory_names)==number_of_folders:
+                            utility.publish_results(channel, responseDict, project_code, settings, connection)
+                    else:
+                        print("send failure response")
+                        logging.info('send failure response')
+                        responseDict = utility.form_error_response(responseDict, "documents upload to elasticsearch failed", api_data, filename_pdf)
+                        responseDict["group_index_names"]=[]
+                        print("responseDict", responseDict)
+                        logging.info('responseDict %s', responseDict)
 
-                #         # send message only on last folder
-                #         if len(directory_names)==number_of_folders:
-                #             utility.publish_results(channel, responseDict, project_code, settings, connection)
-                # else:
-                #     print("Failure")
-                #     logging.info('Failure')
-                #     responseDict = utility.form_error_response(responseDict, "elasticsearch index creation failed", api_data, filename_pdf)
-                #     responseDict["group_index_names"]=[]
-                #     print("responseDict", responseDict)
-                #     logging.info('responseDict %s', responseDict)
-                #     #send message only on last folder
-                #     if len(directory_names)==number_of_folders:
-                #         utility.publish_results(channel, responseDict, project_code, settings, connection)
+                        # send message only on last folder
+                        if len(directory_names)==number_of_folders:
+                            utility.publish_results(channel, responseDict, project_code, settings, connection)
+                else:
+                    print("Failure")
+                    logging.info('Failure')
+                    responseDict = utility.form_error_response(responseDict, "elasticsearch index creation failed", api_data, filename_pdf)
+                    responseDict["group_index_names"]=[]
+                    print("responseDict", responseDict)
+                    logging.info('responseDict %s', responseDict)
+                    #send message only on last folder
+                    if len(directory_names)==number_of_folders:
+                        utility.publish_results(channel, responseDict, project_code, settings, connection)
             else:
                 output_dir_path = output_directory + directory_name + '/'
                 utility.output_dir_handling(output_dir_path)
@@ -215,6 +216,7 @@ def extract_documets_data(channel, api_data, settings, connection, es_client, em
         
      
 def clean_text(text):
+    print("Cleaning")
     #Remove non ASCII characters 
     text = re.sub(r'[^\x00-\x7F]+', ' ', text)
     text = text.lower()

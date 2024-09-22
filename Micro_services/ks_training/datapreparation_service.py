@@ -10,7 +10,7 @@ import engine.multi_format as multi_format
 # os.environ["https_proxy"] = 'http://z043398:Dean140298cdm@138.21.89.193:3128'
 # os.environ["HTTP_PROXY"] = 'http://z043398:Dean140298cdm@138.21.89.193:3128'
 # os.environ["HTTPS_PROXY"] = 'http://z043398:Dean140298cdm@138.21.89.193:3128'
-embeddings = "" #Embedding(r'intfloat/e5-large-v2')
+embeddings = Embedding(r'intfloat/e5-large-v2')
 
 connection = None
 
@@ -108,9 +108,9 @@ if __name__ == '__main__':
     if (utility.establish_socket_connection(settings))=="connection failed":
         print("connection failed, pls check RabbitMQ server")
     else:
-        # if (utility.establish_elasticsearch_connection(settings))=="connection failed":
-        #     print("connection failed, pls check Elasticsearch server")
-        # else:
-        # es_client = utility.establish_elasticsearch_connection(settings)
-        channel, connection = utility.establish_socket_connection(settings)
-        start_consumer_service(channel, settings, connection, "es_client")
+        if (utility.establish_elasticsearch_connection(settings))=="connection failed":
+            print("connection failed, pls check Elasticsearch server")
+        else:
+            es_client = utility.establish_elasticsearch_connection(settings)
+            channel, connection = utility.establish_socket_connection(settings)
+            start_consumer_service(channel, settings, connection, es_client)
