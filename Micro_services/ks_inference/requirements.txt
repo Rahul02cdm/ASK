@@ -1,0 +1,9 @@
+pika
+tika
+elasticsearch
+pandas
+tqdm
+flask
+flask-cors
+# uvicorn
+# fastapi

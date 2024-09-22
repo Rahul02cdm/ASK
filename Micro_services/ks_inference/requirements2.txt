@@ -1,0 +1,6 @@
+sentence_transformers
+langchain==0.0.251
+accelerate
+torch
+transformers
+langchain_community

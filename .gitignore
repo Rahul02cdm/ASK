@@ -1,9 +1,21 @@
 files_local
-
 demo.py
 producer_MQ.py
 
-Micro_services/ks_training/data_preparation_service_copy.py
-
+# ks_training
 Micro_services/ks_training/engine/__pycache__
 Micro_services/ks_training/env_config/__pycache__
+
+# additional
+Micro_services/ks_training/data_preparation_service_copy.py
+
+#------------------------------------------
+
+# ks_inference
+Micro_services/ks_inference/engine/__pycache__
+Micro_services/ks_inference/config/__pycache__
+# Micro_services/ks_inference/model.py
+Micro_services/ks_inference/model/LaMini-T5-738M
+
+# additional
+Micro_services/ks_inference/ks_inference_final.py
