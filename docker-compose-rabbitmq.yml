@@ -12,6 +12,10 @@ services:
     volumes:
       - "rabbitmq:/var/lib/rabbitmq"
 
+networks:
+  ask-networks:
+    name: ask-network
+
 volumes:
   rabbitmq:
     driver: local
